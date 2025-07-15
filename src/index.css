@@ -2,41 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+/* Arabic Travel App Design System */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    --background: 220 20% 97%;
+    --foreground: 220 15% 12%;
 
     --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
+    --card-foreground: 220 15% 12%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
+    --popover-foreground: 220 15% 12%;
 
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 200 90% 45%;
+    --primary-foreground: 0 0% 100%;
+    --primary-glow: 200 85% 55%;
 
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 35 85% 60%;
+    --secondary-foreground: 0 0% 100%;
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 220 10% 95%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
+    --accent: 280 70% 60%;
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive-foreground: 0 0% 100%;
 
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 222.2 84% 4.9%;
+    --border: 220 15% 90%;
+    --input: 220 15% 95%;
+    --ring: 200 90% 45%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
+
+    /* Travel App Specific Colors */
+    --ocean: 200 90% 45%;
+    --sunset: 35 85% 60%;
+    --adventure: 280 70% 60%;
+    --nature: 120 50% 40%;
+    
+    /* Gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--primary-glow)));
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--sunset)), hsl(35 90% 70%));
+    --gradient-travel: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--sunset)));
+    
+    /* Shadows */
+    --shadow-soft: 0 4px 20px hsl(var(--ocean) / 0.15);
+    --shadow-hover: 0 8px 30px hsl(var(--ocean) / 0.25);
+    
+    /* Animations */
+    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -56,41 +74,42 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 220 25% 8%;
+    --foreground: 220 10% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 20% 12%;
+    --card-foreground: 220 10% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 20% 12%;
+    --popover-foreground: 220 10% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 200 90% 55%;
+    --primary-foreground: 220 25% 8%;
+    --primary-glow: 200 85% 65%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 35 85% 65%;
+    --secondary-foreground: 220 25% 8%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 15% 15%;
+    --muted-foreground: 220 10% 60%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 280 70% 65%;
+    --accent-foreground: 220 25% 8%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 50%;
+    --destructive-foreground: 220 10% 95%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --border: 220 15% 20%;
+    --input: 220 15% 15%;
+    --ring: 200 90% 55%;
+    
+    /* Dark mode gradients */
+    --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--primary-glow)));
+    --gradient-sunset: linear-gradient(135deg, hsl(var(--sunset)), hsl(35 90% 75%));
+    --gradient-travel: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--sunset)));
+    
+    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
+    --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.5);
   }
 }
 
@@ -101,5 +120,71 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
+    font-family: 'Noto Sans Arabic', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    direction: rtl;
+  }
+
+  html {
+    direction: rtl;
+  }
+}
+
+@layer components {
+  .travel-card {
+    @apply bg-card rounded-xl shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] 
+           transition-[var(--transition-smooth)] border border-border overflow-hidden;
+  }
+  
+  .travel-card:hover {
+    @apply transform -translate-y-1;
+  }
+  
+  .btn-primary {
+    @apply bg-gradient-to-r from-[hsl(var(--ocean))] to-[hsl(var(--primary-glow))] 
+           text-primary-foreground px-6 py-3 rounded-lg font-medium 
+           shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
+           transition-[var(--transition-smooth)] hover:scale-105;
+  }
+  
+  .btn-secondary {
+    @apply bg-gradient-to-r from-[hsl(var(--sunset))] to-[hsl(35_90%_70%)] 
+           text-secondary-foreground px-6 py-3 rounded-lg font-medium 
+           shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
+           transition-[var(--transition-smooth)] hover:scale-105;
+  }
+  
+  .price-tag {
+    @apply bg-gradient-to-r from-[hsl(var(--adventure))] to-[hsl(280_75%_70%)] 
+           text-accent-foreground px-3 py-1 rounded-full text-sm font-semibold;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out;
+  }
+  
+  .animate-slide-up {
+    animation: slideUp 0.8s ease-out;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
