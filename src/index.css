@@ -38,23 +38,27 @@
 
     --radius: 0.75rem;
 
-    /* Travel App Specific Colors */
+    /* Mobile App Specific Colors */
     --ocean: 200 90% 45%;
     --sunset: 35 85% 60%;
     --adventure: 280 70% 60%;
     --nature: 120 50% 40%;
+    --success: 142 76% 36%;
     
-    /* Gradients */
+    /* Mobile App Gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--primary-glow)));
     --gradient-sunset: linear-gradient(135deg, hsl(var(--sunset)), hsl(35 90% 70%));
     --gradient-travel: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--sunset)));
+    --gradient-category: linear-gradient(145deg, hsl(var(--ocean)) 0%, hsl(var(--primary-glow)) 100%);
     
-    /* Shadows */
-    --shadow-soft: 0 4px 20px hsl(var(--ocean) / 0.15);
-    --shadow-hover: 0 8px 30px hsl(var(--ocean) / 0.25);
+    /* Mobile App Shadows */
+    --shadow-soft: 0 2px 12px hsl(var(--ocean) / 0.08);
+    --shadow-hover: 0 4px 20px hsl(var(--ocean) / 0.15);
+    --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.1);
     
-    /* Animations */
-    --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    /* Mobile App Animations */
+    --transition-smooth: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-spring: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
 
     --sidebar-background: 0 0% 98%;
 
@@ -103,13 +107,15 @@
     --input: 220 15% 15%;
     --ring: 200 90% 55%;
     
-    /* Dark mode gradients */
+    /* Dark mode mobile gradients */
     --gradient-ocean: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--primary-glow)));
     --gradient-sunset: linear-gradient(135deg, hsl(var(--sunset)), hsl(35 90% 75%));
     --gradient-travel: linear-gradient(135deg, hsl(var(--ocean)), hsl(var(--sunset)));
+    --gradient-category: linear-gradient(145deg, hsl(var(--ocean)) 0%, hsl(var(--primary-glow)) 100%);
     
-    --shadow-soft: 0 4px 20px hsl(0 0% 0% / 0.3);
-    --shadow-hover: 0 8px 30px hsl(0 0% 0% / 0.5);
+    --shadow-soft: 0 2px 12px hsl(0 0% 0% / 0.15);
+    --shadow-hover: 0 4px 20px hsl(0 0% 0% / 0.25);
+    --shadow-card: 0 1px 3px hsl(0 0% 0% / 0.2);
   }
 }
 
@@ -130,47 +136,95 @@
 }
 
 @layer components {
+  /* Mobile App Style Cards */
+  .mobile-card {
+    @apply bg-card rounded-2xl shadow-[var(--shadow-card)] border border-border/50 
+           overflow-hidden transition-[var(--transition-smooth)];
+  }
+  
+  .mobile-card:hover {
+    @apply shadow-[var(--shadow-hover)] transform -translate-y-0.5;
+  }
+  
+  .category-card {
+    @apply mobile-card p-6 text-center cursor-pointer
+           hover:shadow-[var(--shadow-hover)] active:scale-95
+           transition-[var(--transition-spring)];
+  }
+  
   .travel-card {
-    @apply bg-card rounded-xl shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)] 
-           transition-[var(--transition-smooth)] border border-border overflow-hidden;
+    @apply mobile-card;
   }
   
   .travel-card:hover {
     @apply transform -translate-y-1;
   }
   
+  /* Mobile App Buttons */
   .btn-primary {
     @apply bg-gradient-to-r from-[hsl(var(--ocean))] to-[hsl(var(--primary-glow))] 
-           text-primary-foreground px-6 py-3 rounded-lg font-medium 
+           text-primary-foreground px-6 py-3 rounded-xl font-medium 
            shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
-           transition-[var(--transition-smooth)] hover:scale-105;
+           transition-[var(--transition-smooth)] hover:scale-105 active:scale-95;
   }
   
   .btn-secondary {
     @apply bg-gradient-to-r from-[hsl(var(--sunset))] to-[hsl(35_90%_70%)] 
-           text-secondary-foreground px-6 py-3 rounded-lg font-medium 
+           text-secondary-foreground px-6 py-3 rounded-xl font-medium 
            shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
-           transition-[var(--transition-smooth)] hover:scale-105;
+           transition-[var(--transition-smooth)] hover:scale-105 active:scale-95;
   }
   
-  .price-tag {
-    @apply bg-gradient-to-r from-[hsl(var(--adventure))] to-[hsl(280_75%_70%)] 
-           text-accent-foreground px-3 py-1 rounded-full text-sm font-semibold;
+  .btn-whatsapp {
+    @apply bg-gradient-to-r from-[hsl(var(--success))] to-[hsl(142_76%_45%)] 
+           text-white px-6 py-3 rounded-xl font-medium 
+           shadow-[var(--shadow-soft)] hover:shadow-[var(--shadow-hover)]
+           transition-[var(--transition-smooth)] hover:scale-105 active:scale-95;
   }
   
+  /* Enhanced Pricing Design */
+  .pricing-container {
+    @apply grid grid-cols-2 gap-3 p-4 bg-muted/30 rounded-xl;
+  }
+  
+  .pricing-item {
+    @apply flex flex-col items-center p-3 bg-card rounded-lg shadow-[var(--shadow-card)]
+           border border-border/30 transition-[var(--transition-smooth)]
+           hover:shadow-[var(--shadow-soft)] hover:border-primary/20;
+  }
+  
+  .pricing-label {
+    @apply text-xs text-muted-foreground mb-1 font-medium;
+  }
+  
+  .pricing-value {
+    @apply text-sm font-bold bg-gradient-to-r from-[hsl(var(--adventure))] to-[hsl(280_75%_70%)]
+           bg-clip-text text-transparent;
+  }
+  
+  /* Mobile App Header */
+  .mobile-header {
+    @apply sticky top-0 z-50 bg-card/80 backdrop-blur-lg border-b border-border/50;
+  }
+  
+  /* Animations */
   .animate-fade-in {
-    animation: fadeIn 0.6s ease-out;
+    animation: fadeIn 0.4s ease-out;
   }
   
   .animate-slide-up {
-    animation: slideUp 0.8s ease-out;
+    animation: slideUp 0.6s ease-out;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.3s ease-out;
   }
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(16px);
   }
   to {
     opacity: 1;
@@ -181,10 +235,21 @@
 @keyframes slideUp {
   from {
     opacity: 0;
-    transform: translateY(40px);
+    transform: translateY(32px);
   }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
   }
 }

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Calendar, Clock, MapPin, Plane, Hotel, Users, Baby, MessageCircle, Play } from 'lucide-react';
+import { Calendar, Clock, MapPin, Plane, Hotel, MessageCircle, Play } from 'lucide-react';
 import { TravelOffer } from '@/types/travel';
 import { ImageSlider } from './ImageSlider';
 import { VideoModal } from './VideoModal';
@@ -63,45 +63,33 @@ export function TravelCard({ offer }: TravelCardProps) {
               {offer.offerName}
             </h3>
 
-            {/* Pricing Grid */}
-            <div className="grid grid-cols-2 gap-3">
+            {/* Enhanced Pricing Grid */}
+            <div className="pricing-container">
               {offer.price2 > 0 && (
-                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="flex items-center text-sm">
-                    <Users className="w-4 h-4 ml-1" />
-                    شخصين
-                  </span>
-                  <span className="price-tag">{formatPrice(offer.price2)}</span>
+                <div className="pricing-item">
+                  <span className="pricing-label">الباكيج الثنائي</span>
+                  <span className="pricing-value">{formatPrice(offer.price2)}</span>
                 </div>
               )}
               
               {offer.price3 > 0 && (
-                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="flex items-center text-sm">
-                    <Users className="w-4 h-4 ml-1" />
-                    ثلاثة أشخاص
-                  </span>
-                  <span className="price-tag">{formatPrice(offer.price3)}</span>
+                <div className="pricing-item">
+                  <span className="pricing-label">الباكيج الثلاثي</span>
+                  <span className="pricing-value">{formatPrice(offer.price3)}</span>
                 </div>
               )}
               
               {offer.price4 > 0 && (
-                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="flex items-center text-sm">
-                    <Users className="w-4 h-4 ml-1" />
-                    أربعة أشخاص
-                  </span>
-                  <span className="price-tag">{formatPrice(offer.price4)}</span>
+                <div className="pricing-item">
+                  <span className="pricing-label">الباكيج الرباعي</span>
+                  <span className="pricing-value">{formatPrice(offer.price4)}</span>
                 </div>
               )}
               
               {offer.priceChild > 0 && (
-                <div className="flex items-center justify-between p-3 bg-muted rounded-lg">
-                  <span className="flex items-center text-sm">
-                    <Baby className="w-4 h-4 ml-1" />
-                    الطفل
-                  </span>
-                  <span className="price-tag">{formatPrice(offer.priceChild)}</span>
+                <div className="pricing-item">
+                  <span className="pricing-label">سعر الطفل</span>
+                  <span className="pricing-value">{formatPrice(offer.priceChild)}</span>
                 </div>
               )}
             </div>
@@ -173,9 +161,9 @@ export function TravelCard({ offer }: TravelCardProps) {
               </div>
             )}
 
-            {/* Book Now Button */}
+            {/* WhatsApp Book Now Button */}
             <Button 
-              className="w-full btn-secondary"
+              className="w-full btn-whatsapp"
               onClick={handleBookNow}
             >
               <MessageCircle className="w-4 h-4 ml-2" />

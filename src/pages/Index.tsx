@@ -1,19 +1,21 @@
 import { useState, useEffect } from 'react';
-import { TravelCard } from '@/components/TravelCard';
-import { FilterBar } from '@/components/FilterBar';
+import { CategoryGrid } from '@/components/CategoryGrid';
 import { LoadingSpinner } from '@/components/LoadingSpinner';
 import { useGoogleSheets } from '@/hooks/useGoogleSheets';
-import { TravelOffer } from '@/types/travel';
-import { Plane, MapPin, Calendar, MessageCircle } from 'lucide-react';
+import { Plane, MapPin, Calendar, Search } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 const Index = () => {
   const { offers, loading, error } = useGoogleSheets();
-  const [filteredOffers, setFilteredOffers] = useState<TravelOffer[]>([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
-  // Update filtered offers when offers change
-  useEffect(() => {
-    setFilteredOffers(offers);
-  }, [offers]);
+  // Filter offers based on search
+  const filteredOffers = searchTerm 
+    ? offers.filter(offer =>
+        offer.country.includes(searchTerm) ||
+        offer.offerName.includes(searchTerm)
+      )
+    : offers;
 
   if (loading) {
     return <LoadingSpinner />;
@@ -32,27 +34,39 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Hero Section */}
-      <div className="bg-gradient-travel text-white py-16 px-4">
-        <div className="max-w-6xl mx-auto text-center">
+      {/* Mobile App Hero Section */}
+      <div className="bg-gradient-travel text-white py-12 px-4">
+        <div className="max-w-4xl mx-auto text-center">
           <div className="animate-fade-in">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
+            <h1 className="text-3xl md:text-5xl font-bold mb-4">
               أوقات للسفر والسياحة
             </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90">
-              اكتشف أجمل الوجهات السياحية مع أفضل العروض
+            <p className="text-lg md:text-xl mb-6 opacity-90">
+              اختر وجهتك المفضلة واكتشف أفضل العروض
             </p>
-            <div className="flex justify-center items-center gap-8 text-lg">
+            
+            {/* Search Bar */}
+            <div className="relative max-w-md mx-auto mb-6">
+              <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-white/70 w-5 h-5" />
+              <Input
+                placeholder="ابحث عن الوجهة..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pr-12 bg-white/10 border-white/20 text-white placeholder:text-white/70 rounded-full"
+              />
+            </div>
+
+            <div className="flex justify-center items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
-                <Plane className="w-6 h-6" />
+                <Plane className="w-5 h-5" />
                 <span>رحلات مميزة</span>
               </div>
               <div className="flex items-center gap-2">
-                <MapPin className="w-6 h-6" />
+                <MapPin className="w-5 h-5" />
                 <span>وجهات متنوعة</span>
               </div>
               <div className="flex items-center gap-2">
-                <Calendar className="w-6 h-6" />
+                <Calendar className="w-5 h-5" />
                 <span>مواعيد مرنة</span>
               </div>
             </div>
@@ -60,61 +74,35 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        {/* Filter Section */}
-        <div className="animate-slide-up">
-          <FilterBar 
-            offers={offers} 
-            onFilterChange={setFilteredOffers}
-          />
-        </div>
-
-        {/* Offers Grid */}
-        {filteredOffers.length === 0 ? (
-          <div className="text-center py-16">
-            <h2 className="text-2xl font-semibold text-muted-foreground mb-4">
-              لا توجد عروض متاحة
-            </h2>
+      {/* Categories Section */}
+      <div className="px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-6">
+            <h2 className="text-2xl font-bold mb-2">اختر وجهتك</h2>
             <p className="text-muted-foreground">
-              جرب البحث بمصطلحات أخرى أو قم بمسح الفلاتر
+              {filteredOffers.length > 0 
+                ? `${Array.from(new Set(filteredOffers.map(o => o.country))).length} وجهة متاحة`
+                : 'جاري التحميل...'
+              }
             </p>
           </div>
-        ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {filteredOffers.map((offer, index) => (
-              <div 
-                key={`${offer.country}-${offer.offerName}-${index}`}
-                className="animate-fade-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <TravelCard offer={offer} />
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
 
-      {/* Footer */}
-      <footer className="bg-card border-t py-8 px-4 mt-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <h3 className="text-xl font-semibold mb-4">أوقات للسفر والسياحة</h3>
-          <p className="text-muted-foreground mb-4">
-            نحن هنا لنجعل رحلتك تجربة لا تُنسى
-          </p>
-          <div className="flex justify-center items-center gap-4">
-            <a 
-              href="https://wa.me/96522289080" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="btn-primary inline-flex items-center"
-            >
-              <MessageCircle className="w-4 h-4 ml-2" />
-              تواصل معنا
-            </a>
+          <div className="animate-slide-up">
+            <CategoryGrid offers={filteredOffers} />
           </div>
+
+          {filteredOffers.length === 0 && searchTerm && (
+            <div className="text-center py-16">
+              <h3 className="text-xl font-semibold text-muted-foreground mb-2">
+                لا توجد نتائج للبحث "{searchTerm}"
+              </h3>
+              <p className="text-muted-foreground">
+                جرب البحث بمصطلحات أخرى
+              </p>
+            </div>
+          )}
         </div>
-      </footer>
+      </div>
     </div>
   );
 };

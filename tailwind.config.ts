@@ -59,12 +59,14 @@ export default {
 				ocean: 'hsl(var(--ocean))',
 				sunset: 'hsl(var(--sunset))',
 				adventure: 'hsl(var(--adventure))',
-				nature: 'hsl(var(--nature))'
+				nature: 'hsl(var(--nature))',
+				success: 'hsl(var(--success))'
 			},
 			backgroundImage: {
 				'gradient-ocean': 'var(--gradient-ocean)',
 				'gradient-sunset': 'var(--gradient-sunset)',
 				'gradient-travel': 'var(--gradient-travel)',
+				'gradient-category': 'var(--gradient-category)',
 			},
 			boxShadow: {
 				'soft': 'var(--shadow-soft)',
